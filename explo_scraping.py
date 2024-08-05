@@ -33,7 +33,7 @@ def save_data(df):
     Save provided dataframe to database
     """
     #df.to_sql(name=BUREAUX_TABLE, con=get_engine(), if_exists="append", index=False)
-    today_str = dt.date.today().strftime("%Y-%M-%d")
+    today_str = dt.date.today().strftime("%Y-%m-%d")
     save_path = Path(".")/ f"data/bureaux_{today_str}.xlsx"
     print("Saving to: ", str(save_path))
     df.to_excel(save_path)
