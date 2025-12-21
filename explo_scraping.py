@@ -1,15 +1,11 @@
 """
 Functions for the scraping module
 """
-from bs4 import BeautifulSoup
-import requests
 import pandas as pd
 import datetime as dt
 from pathlib import Path
 
-from pydantic import BaseModel
-from typing import List, Tuple, Optional
-#from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text
 
 from bnp_re_parser import parser as bnp_parser
 from jll_parser import full_parser as jll_parser
@@ -36,7 +32,7 @@ def save_data(df):
     today_str = dt.date.today().strftime("%Y-%m-%d")
     save_path = Path(".")/ f"data/bureaux_{today_str}.xlsx"
     print("Saving to: ", str(save_path))
-    df.to_excel(save_path)
+    df.to_excel(save_path, index=False)
 
 
 def _process_item(source_str, parser) -> pd.DataFrame:
