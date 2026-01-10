@@ -24,15 +24,19 @@ def get_engine():
     return create_engine(f"postgresql+psycopg2://{user_name}:{password}@{host}/{db_name}", echo=False)
 
 
-def save_data(df):
+def save_data(df, save_to_db=True):
     """
     Save provided dataframe to database
     """
-    #df.to_sql(name=BUREAUX_TABLE, con=get_engine(), if_exists="append", index=False)
+    if save_to_db:
+        df.to_sql(name=BUREAUX_TABLE, con=get_engine(), if_exists="append", index=False)
+        return "Saved to database."
+    
     today_str = dt.date.today().strftime("%Y-%m-%d")
     save_path = Path(".")/ f"data/bureaux_{today_str}.xlsx"
     print("Saving to: ", str(save_path))
     df.to_excel(save_path, index=False)
+    return "Saved to Excel."
 
 
 def _process_item(source_str, parser) -> pd.DataFrame:
