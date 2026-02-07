@@ -15,6 +15,15 @@ import traceback
 
 from commons import RentalItem
 
+#FIREFOX_SELENIUM_PROFILE_PATH = (
+#    '/Users/OGabriel/Library/Application Support/Firefox/Profiles/fiy2r8a2.Selenium'
+#)
+
+FIREFOX_SELENIUM_PROFILE_PATH = (
+    r"C:\Users\Personne\AppData\Local\Mozilla\Firefox\Profiles\utjbni1m.lenient_user"
+)
+
+
 def _extract_one_tag(tag):
     """
     Extract data (ref and value) from one tag
@@ -47,7 +56,7 @@ def extract_ref_value_dict(item0) -> dict:
     return ref_value_dict
 
 
-def parse_price(price_str) -> float | type(np.nan):
+def parse_price(price_str):# -> float | type(np.nan):
     """
     Parse price string to float.
 
@@ -79,7 +88,7 @@ def parse_price(price_str) -> float | type(np.nan):
         return np.nan
     
     
-def parse_surface(surface_str) -> int:
+def parse_surface(surface_str):# -> int:
     """
     Parse surface string into integer square meters.
 
@@ -166,7 +175,7 @@ def process_rental_item(item0) -> Optional[RentalItem]:
 
         return RentalItem(
             address=address,
-            surface_m2=surface,
+            surface_m2=int(surface),
             price_eur_per_year_per_m2=price_eur_per_year_per_m2,
             internal_ref=internal_ref,
         )
@@ -202,8 +211,7 @@ def get_page_content(url = "https://immobilier.jll.fr/search?tenureType=rent&pro
     Recover page content in BeautifulSoup format
     """
     options = webdriver.FirefoxOptions()
-    options.profile = webdriver.FirefoxProfile(
-        '/Users/OGabriel/Library/Application Support/Firefox/Profiles/fiy2r8a2.Selenium')
+    options.profile = webdriver.FirefoxProfile(FIREFOX_SELENIUM_PROFILE_PATH)
     driver = webdriver.Firefox(options)
     driver.get(
         "https://immobilier.jll.fr/search?tenureType=rent&propertyType=office&city=MONTROUGE&postcode=92120")
