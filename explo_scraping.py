@@ -1,5 +1,7 @@
 """
 Functions for the scraping module
+
+Also contains the Python runner
 """
 import pandas as pd
 import datetime as dt
@@ -78,3 +80,11 @@ def load_data() -> pd.DataFrame:
     with get_engine().begin() as conn:
         query = text(f"SELECT * FROM {BUREAUX_TABLE};")
         return pd.read_sql_query(query, conn)
+
+
+if __name__ == "__main__":
+    new_df = scrape_save()
+
+    df = load_data()
+    print("Last 10 entries in the database:")
+    print(df['date'].tail(10))
